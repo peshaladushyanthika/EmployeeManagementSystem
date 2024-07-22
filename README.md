@@ -9,6 +9,8 @@ This project is a simple CRUD (Create, Read, Update, Delete) application develop
 - Delete profile
 - List all profiles
 - Add,update & delete profile contact details
+- Export grid into CSV,XML and copy to clipboard
+- Generate report
 
 ## Technologies Used
 
