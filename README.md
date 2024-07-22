@@ -50,7 +50,5 @@ Follow these steps to set up and run the project locally.
     - Compile and run the project from the Delphi IDE.
     - The application should open, allowing you to add, edit, delete, and list profiles.
 ### Main User Interfaces
-    - ![profile](https://github.com/user-attachments/assets/b13db4bd-5e6b-4429-8d64-ab53a070f4a1)
-    - ![edit](https://github.com/user-attachments/assets/d76ec5c5-38fd-46de-8ff4-7695a54ad7bb)
 
-![newContact](https://github.com/user-attachments/assets/ae076bf1-6daa-428c-917a-4d052f9f8c21)
+![profile](https://github.com/user-attachments/assets/fa8208f5-936a-4f77-823c-dd915f0b59e1)
