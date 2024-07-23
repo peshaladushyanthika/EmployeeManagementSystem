@@ -1,6 +1,6 @@
 # Employee Management System
 
-This project is a simple CRUD (Create, Read, Update, Delete) application developed using Delphi.
+This project is a Profile Managemnt System developed using Delphi. It basically allows to manage employee details.
 
 ## Features
 
@@ -57,4 +57,4 @@ Follow these steps to set up and run the project locally.
 
 ![export](https://github.com/user-attachments/assets/702b044d-7818-4a50-96ca-a5bffeab19da)
 
-
+Feel free to contribute to the project, report any issues, or ask questions by creating a new issue on the GitHub repository. Happy coding!
