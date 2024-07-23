@@ -64,16 +64,15 @@ if response = mrYes then
   DataM.Connection1.StartTransaction;
   // Get the ProfileID
   ProfileID := DataM.Query1.FieldByName('id').AsInteger;
-  // Check if there are any related contacts in the con_dtl table
+  // Check if there are any related contacts in the contact table
   DataM.Query2.Close;
   DataM.Query2.SQL.Text := 'SELECT * FROM contact WHERE profileId = :ProfileID';
   DataM.Query2.ParamByName('ProfileID').AsInteger := ProfileID;
   DataM.Query2.Open;
     if not DataM.Query2.IsEmpty then
     begin
-      // Delete all related contacts
-        DataM.Query2.Delete;
-      ShowMessage('All related contacts deleted successfully');
+    DataM.Query2.Delete;  // Delete all related contacts
+    ShowMessage('All related contacts deleted successfully');
     end;
   DataM.Query1.Delete;
   ShowMessage('Record is deleted.');
@@ -126,50 +125,6 @@ procedure TMainF.btExportClick(Sender: TObject);
 begin
 ExportF.showmodal;
 end;
-
-//procedure TMainF.Button1Click(Sender: TObject);
-//var
-//  ProfileIDs: TStringList;
-//  i: Integer;
-//  FilterStr: string;
-//begin
-//  ProfileIDs := TStringList.Create;
-//  try
-//    // Collect all selected profile IDs
-//    for i := 0 to DBGrid1.SelectedRows.Count - 1 do
-//    begin
-//      DataM.Query1.GotoBookmark(DBGrid1.SelectedRows.Items[i]);
-//      ProfileIDs.Add(IntToStr(DataM.Query1.FieldByName('id').AsInteger));
-//    end;
-//    ShowMessage('Collected Profile IDs: ' + ProfileIDs.CommaText);
-//
-//    // Construct the filter string
-//    FilterStr := 'id IN (' + ProfileIDs.CommaText + ')';
-//    FilterQueryByProfileIDs(FilterStr);
-//
-//    // Generate the report for all selected profiles
-//    ReportEmpF := TReportEmpF.Create(nil);
-//    try
-//      ReportEmpF.SetupEmpReportMulti(ProfileIDs.CommaText);
-//    finally
-//      ReportEmpF.Free;
-//    end;
-//    // Remove the filter after the report is generated
-//    DataM.Query1.Filtered := False;
-//  except
-//    on E: Exception do
-//      ShowMessage('An error occurred: ' + E.Message);
-//  end;
-//  ProfileIDs.Free;
-//end;
-//
-//procedure TMainF.FilterQueryByProfileIDs(FilterStr: string);
-//begin
-//  DataM.Query1.Filtered := False;
-//  DataM.Query1.Filter := FilterStr;
-//  DataM.Query1.Filtered := True;
-//end;
-
 
 //search while typing the name
 procedure TMainF.edSearchChange(Sender: TObject);

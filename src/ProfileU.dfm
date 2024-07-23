@@ -159,7 +159,6 @@ object ProfileF: TProfileF
     DataField = 'dob'
     DataSource = DataSource1
     TabOrder = 2
-    OnChange = dobEdChange
   end
   object nicEd: TDBEdit
     AlignWithMargins = True

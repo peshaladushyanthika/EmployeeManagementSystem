@@ -32,7 +32,6 @@ type
   public
     { Public declarations }
     procedure SetupEmpReport(ProfileID :Integer);
-//    procedure SetupEmpReportMulti(CommaTextIDs: string);
   end;
 
 var
@@ -55,16 +54,4 @@ DataM.Query2.Close;
   RLReport1.Prepare;
   RLReport1.PreviewModal;
 end;
-
-//procedure TReportEmpF.SetupEmpReportMulti(CommaTextIDs: string);
-//begin
-//DataM.Query2.Close;
-//  DataM.Query2.SQL.Text := 'SELECT * FROM con_dtl WHERE profile_id IN (' + CommaTextIDs + ')';
-//  DataM.Query2.Open;
-//  RLDBTextCon.DataField := 'contact';
-//  RLDBTextCon.DataSource := DataM.DataSource2;
-//  RLReport1.Prepare;
-//  RLReport1.PreviewModal;
-//end;
-
 end.

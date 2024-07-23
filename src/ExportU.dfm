@@ -154,5 +154,9 @@ object ExportF: TExportF
       Caption = 'Export to XML'
       OnClick = ExporttoXML1Click
     end
+    object ExporttoExcel1: TMenuItem
+      Caption = 'Export to Excel'
+      OnClick = ExporttoExcel1Click
+    end
   end
 end

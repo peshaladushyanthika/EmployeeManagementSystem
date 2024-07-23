@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Menus, Vcl.StdCtrls,Clipbrd, Xml.XMLDoc, Xml.XMLIntf;
+  Vcl.DBGrids, Vcl.Menus, Vcl.StdCtrls,Clipbrd, Xml.XMLDoc, Xml.XMLIntf,Vcl.OleServer, ExcelXP, ComObj;
 
 type
   TExportF = class(TForm)
@@ -16,6 +16,7 @@ type
     copytoclipboard1: TMenuItem;
     ExporttoXML1: TMenuItem;
     Button1: TButton;
+    ExporttoExcel1: TMenuItem;
     procedure copytoclipboard1Click(Sender: TObject);
     procedure CopyGridDataToClipboard;
     procedure ExportGridData;
@@ -26,6 +27,8 @@ type
     procedure btPrintClick(Sender: TObject);
     procedure FilterQueryByProfileID(ProfileID: Integer);
     procedure Button1Click(Sender: TObject);
+    procedure ExporttoExcel1Click(Sender: TObject);
+    procedure ExportToExcel(DBGrid: TDBGrid);
   private
     { Private declarations }
   public
@@ -153,7 +156,7 @@ end;
 
 procedure TExportF.ExportToCsvClick(Sender: TObject);
 begin
-       ExportGridData;
+ExportGridData;
 end;
 
 //export to XML
@@ -178,16 +181,43 @@ begin
     RowNode.AddChild(DBGrid.Fields[i].FieldName).Text := DBGrid.Fields[i].AsString;
   end;
   //save the XML document
-  FileName := ExtractFilePath(Application.ExeName) + 'SelectedRow.xml';
+  FileName := ExtractFilePath(Application.ExeName) + 'ProfileData.xml';
   XMLDoc.SaveToFile(FileName);
   ShowMessage('Selected row exported to ' + FileName);
 end;
-
 
 procedure TExportF.ExporttoXML1Click(Sender: TObject);
 begin
 ExportToXMLClick;
 end;
 
+procedure TExportF.ExportToExcel(DBGrid: TDBGrid);
+var
+  ExcelApp, Workbook, Worksheet: OleVariant;
+  i: Integer;
+  FileName :  string;
+begin
+  // Create a new Excel application
+  ExcelApp := CreateOleObject('Excel.Application');
+  ExcelApp.Visible := True;
+  //add a new workbook
+  Workbook := ExcelApp.Workbooks.Add;
+  Worksheet := Workbook.Worksheets[1];
+  // Export column headers
+  for i := 0 to DBGrid.Columns.Count - 1 do
+     Worksheet.Cells[1, i + 1].Value := DBGrid.Columns[i].Title.Caption;
+  // Export selected row data
+  for i := 0 to DBGrid.Columns.Count - 1 do
+     Worksheet.Cells[2, i + 1].Value := DBGrid.Fields[i].AsString;
+  // Save the workbook
+  FileName := Workbook.SaveAs('ProfileData.xlsx');
+  ShowMessage('Data exported to Excel Worksheet');
+  ExcelApp.Quit;
+  ExcelApp := Unassigned;
+end;
 
+procedure TExportF.ExporttoExcel1Click(Sender: TObject);
+begin
+ExportToExcel(DBGrid);
+end;
 end.

@@ -29,7 +29,6 @@ type
     DBGrid1: TDBGrid;
     btaddcon: TButton;
     btdelcon: TButton;
-    procedure dobEdChange(Sender: TObject);
     procedure btSaveClick(Sender: TObject);
     procedure btCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -55,7 +54,6 @@ uses DataU,ContactU,ReportEmpU;
 procedure TProfileF.btSaveClick(Sender: TObject);
 var msg: string;
 var Result:boolean;
-//var ProfileID: integer;
 begin
 msg := '';
 if Trim(nameEd.Text) = '' then
@@ -77,27 +75,17 @@ DataM.Connection1.StartTransaction;
 // Save record
 if DataM.Query1.State in [dsEdit,dsInsert] then
   DataM.Query1.Post;
-   //commit the transaction
-  DataM.Connection1.Commit;
+  DataM.Connection1.Commit;    //commit the transaction
   except
   on E: Exception do
   begin
-  //if transaction fail, rollback
-  DataM.Connection1.Rollback;
+  DataM.Connection1.Rollback;  //if transaction fail, rollback
   ShowMessage('Transaction failed: ' + E.Message);
   end;
 end;
   end
   else
   showmessage(msg);
-end;
-
-//calculate age when changing dob
-procedure TProfileF.dobEdChange(Sender: TObject);
-begin
- //   DataM.Query1.Edit;
-   // DataM.Query1CalcFields(DataM.Query1);
-  //  ageEd.Text := IntToStr(DataM.Query1age.AsInteger);
 end;
 
 //show contact details for particular profile in the grid
@@ -126,34 +114,6 @@ begin
 ContactF.ShowModal;
 end;
 
-//delete contact
-//procedure TProfileF.btdelconClick(Sender: TObject);
-//begin
-//  try
-//  //start transaction
-//  DataM.Connection1.StartTransaction;
-//if not DataM.Query2.IsEmpty then
-//  begin
-//  DataM.Query2.Delete;
-//  end
-//else
-//  begin
-//  ShowMessage('No contact to delete');
-//  end;
-//  DataM.Query1.Delete;
-//  ShowMessage('Contact & profile deleted successfully');
-//
-//  //commit the transaction
-//  DataM.Connection1.Commit;
-//except
-//  on E: Exception do
-//  begin
-//  //if transaction fail, rollback
-//  DataM.Connection1.Rollback;
-//  ShowMessage('Transaction failed: ' + E.Message);
-//  end;
-//end;
-//end;
 procedure TProfileF.btdelconClick(Sender: TObject);
 var
   ProfileID: Integer;
@@ -173,38 +133,25 @@ begin
 
     if not DataM.Query2.IsEmpty then
     begin
-      // Delete all related contacts
-//      while not DataM.Query2.Eof do
-//      begin
-        DataM.Query2.Delete;
-//      end;
-      ShowMessage('contacts deleted successfully');
+    DataM.Query2.Delete;
+    ShowMessage('contacts deleted successfully');
     end
     else
     begin
       ShowMessage('No contacts to delete');
     end;
-
-    // Delete the profile
-//    DataM.Query1.Delete;
-//    ShowMessage('Profile deleted successfully');
-
-    // Commit the transaction
-    DataM.Connection1.Commit;
+    DataM.Connection1.Commit;    // Commit the transaction
   except
     on E: Exception do
     begin
-      // If transaction fails, rollback
-      DataM.Connection1.Rollback;
-      ShowMessage('Transaction failed: ' + E.Message);
+    DataM.Connection1.Rollback;    // If transaction fails, rollback
+    ShowMessage('Transaction failed: ' + E.Message);
     end;
   end;
 end;
 
-
 procedure TProfileF.btPrintClick(Sender: TObject);
-var
-  ProfileID: Integer;
+var ProfileID: Integer;
 begin
 ProfileID := DataM.Query1.FieldByName('id').AsInteger;
 FilterQueryByProfileID(ProfileID);
