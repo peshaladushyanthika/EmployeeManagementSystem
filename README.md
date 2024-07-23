@@ -53,6 +53,8 @@ Follow these steps to set up and run the project locally.
 
 ![profile](https://github.com/user-attachments/assets/fa8208f5-936a-4f77-823c-dd915f0b59e1)
 
-![edit](https://github.com/user-attachments/assets/62238155-bf7a-4016-8a0b-263eb70aa3a5)
+![edit](https://github.com/user-attachments/assets/34605462-40bf-4929-874a-8e441067bef5)
 
-![export](https://github.com/user-attachments/assets/87c2af0f-bb73-4c33-90e4-19c94ee7ec47)
+![export](https://github.com/user-attachments/assets/702b044d-7818-4a50-96ca-a5bffeab19da)
+
+
