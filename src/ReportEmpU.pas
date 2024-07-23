@@ -18,7 +18,6 @@ type
     RLLabel2: TRLLabel;
     RLLabel3: TRLLabel;
     RLLabel1: TRLLabel;
-    Panel1: TPanel;
     RLSubDetail1: TRLSubDetail;
     RLBand4: TRLBand;
     RLDBTextCon: TRLDBText;

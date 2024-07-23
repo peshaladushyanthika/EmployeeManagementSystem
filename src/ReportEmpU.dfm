@@ -149,29 +149,20 @@ object ReportEmpF: TReportEmpF
       Width = 898
       Height = 130
       BandType = btTitle
-      Color = clWhite
+      Color = clInactiveCaption
       ParentColor = False
       Transparent = False
-      object Panel1: TPanel
-        Left = 0
-        Top = 3
-        Width = 905
-        Height = 121
-        Color = clWhite
-        ParentBackground = False
-        TabOrder = 1
-      end
       object RLLabel1: TRLLabel
-        Left = 309
+        Left = 300
         Top = 46
-        Width = 280
+        Width = 297
         Height = 38
         Align = faCenter
         Alignment = taJustify
-        Caption = 'Employee Details'
+        Caption = 'Employee Details  '
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clNavy
         Font.Height = -33
         Font.Name = 'Arial'
         Font.Style = [fsBold]

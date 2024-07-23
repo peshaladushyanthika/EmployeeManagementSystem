@@ -1,9 +1,10 @@
 object ExportF: TExportF
   Left = 0
   Top = 0
+  BorderStyle = bsSizeToolWin
   Caption = 'Export Profile'
-  ClientHeight = 489
-  ClientWidth = 954
+  ClientHeight = 500
+  ClientWidth = 962
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,11 +16,11 @@ object ExportF: TExportF
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 954
+    Width = 962
     Height = 57
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 940
+    ExplicitWidth = 954
     object btPrint: TButton
       Left = 704
       Top = 7
@@ -54,8 +55,8 @@ object ExportF: TExportF
   object DBGrid: TDBGrid
     Left = 0
     Top = 57
-    Width = 954
-    Height = 432
+    Width = 962
+    Height = 443
     Align = alClient
     DataSource = DataM.DataSource1
     Font.Charset = DEFAULT_CHARSET
@@ -76,11 +77,6 @@ object ExportF: TExportF
       item
         Expanded = False
         FieldName = 'id'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Segoe UI'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'ID'
         Title.Font.Charset = DEFAULT_CHARSET
@@ -94,11 +90,6 @@ object ExportF: TExportF
       item
         Expanded = False
         FieldName = 'name'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Segoe UI'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'Name'
         Title.Font.Charset = DEFAULT_CHARSET
@@ -106,17 +97,12 @@ object ExportF: TExportF
         Title.Font.Height = -17
         Title.Font.Name = 'Segoe UI'
         Title.Font.Style = [fsBold]
-        Width = 120
+        Width = 150
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'dob'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Segoe UI'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'DOB'
         Title.Font.Charset = DEFAULT_CHARSET
@@ -130,11 +116,6 @@ object ExportF: TExportF
       item
         Expanded = False
         FieldName = 'NIC'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Segoe UI'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -147,11 +128,6 @@ object ExportF: TExportF
       item
         Expanded = False
         FieldName = 'address'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Segoe UI'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'Address'
         Title.Font.Charset = DEFAULT_CHARSET
@@ -167,7 +143,7 @@ object ExportF: TExportF
     Left = 416
     Top = 8
     object copytoclipboard1: TMenuItem
-      Caption = 'copy to clipboard'
+      Caption = 'Copy to Clipboard'
       OnClick = copytoclipboard1Click
     end
     object copytoclipboard2: TMenuItem

@@ -4,7 +4,7 @@ object MainF: TMainF
   BorderStyle = bsSizeToolWin
   Caption = 'Profile Management'
   ClientHeight = 588
-  ClientWidth = 1075
+  ClientWidth = 1064
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object MainF: TMainF
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1075
+    Width = 1064
     Height = 73
     Align = alTop
     Color = clTeal
@@ -29,11 +29,11 @@ object MainF: TMainF
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1112
+    ExplicitWidth = 1067
     object btExit: TButton
       AlignWithMargins = True
       Left = 953
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Margins.Right = 4
@@ -50,7 +50,7 @@ object MainF: TMainF
     object btAdd: TButton
       AlignWithMargins = True
       Left = 626
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Margins.Right = 4
@@ -68,7 +68,7 @@ object MainF: TMainF
     object btEdit: TButton
       AlignWithMargins = True
       Left = 708
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Margins.Right = 4
@@ -85,7 +85,7 @@ object MainF: TMainF
     object btDelete: TButton
       AlignWithMargins = True
       Left = 790
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Margins.Right = 4
@@ -102,7 +102,7 @@ object MainF: TMainF
     object btSearch: TButton
       AlignWithMargins = True
       Left = 320
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Margins.Right = 4
@@ -119,9 +119,9 @@ object MainF: TMainF
     object edSearch: TEdit
       AlignWithMargins = True
       Left = 17
-      Top = 4
+      Top = 8
       Width = 281
-      Height = 41
+      Height = 51
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17
@@ -129,12 +129,12 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 5
-      TextHint = 'Search by Name, NIC'
+      TextHint = '  Search by Name, NIC'
       OnChange = edSearchChange
     end
     object btExport: TButton
       Left = 872
-      Top = 4
+      Top = 8
       Width = 75
       Height = 41
       Caption = 'Export'
@@ -151,7 +151,7 @@ object MainF: TMainF
   object DBGrid1: TDBGrid
     Left = 0
     Top = 73
-    Width = 1075
+    Width = 1064
     Height = 515
     Margins.Right = 4
     Align = alClient
