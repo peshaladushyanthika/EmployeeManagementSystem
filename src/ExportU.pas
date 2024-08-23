@@ -207,10 +207,8 @@ begin
     finally
       DBGrid.DataSource.DataSet.EnableControls;
     end;
-
     if SelectedIDs.Count > 0 then
     begin
-
       FilterString := 'id IN (' + SelectedIDs.CommaText + ')';   // Create a filter
 
       EmpReportU.EmpReportF.Query1.Filter := FilterString;
