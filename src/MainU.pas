@@ -24,9 +24,7 @@ type
     procedure btSearchClick(Sender: TObject);
     procedure btExitClick(Sender: TObject);
     procedure DBGrid1TitleClick(Column: TColumn);
-    procedure FilterQueryByProfileID(ProfileID: Integer);
    procedure edSearchChange(Sender: TObject);
-    procedure ReportClick(Sender: TObject);
     procedure btExportClick(Sender: TObject);
   private
     { Private declarations }
@@ -39,7 +37,7 @@ var
 
 implementation
 //link data module to main form
-uses DataU,ProfileU,ExportU,ReportEmpU;
+uses DataU,ProfileU,ExportU;
 
 {$R *.dfm}
 
@@ -141,45 +139,6 @@ begin
   begin
     DataM.Query1.Filtered := False;
   end;
-end;
-
-procedure TMainF.ReportClick(Sender: TObject);
-var
-  ProfileID: Integer;
-  Bookmark: TBookmark;
-  i: Integer;
-begin
-  try
-    for i := 0 to DBGrid1.SelectedRows.Count - 1 do
-    begin
-      Bookmark := DBGrid1.SelectedRows.Items[i];
-      DataM.Query1.GotoBookmark(Bookmark);
-      ProfileID := DataM.Query1.FieldByName('id').AsInteger;
-      FilterQueryByProfileID(ProfileID);
-      ShowMessage('Selected Profile ID:' + IntTostr(ProfileID));
-
-      ReportEmpF := TReportEmpF.Create(nil);
-      try
-        ReportEmpF.SetupEmpReport(ProfileID);
-        if i > 0 then
-         ReportEmpF.RLReport1.NewPage;
-      finally
-        ReportEmpF.Free;
-      end;
-    // Remove the filter after the report is generated for each profile
-      DataM.Query1.Filtered := False;
-    end;
-  except
-    on E: Exception do
-      ShowMessage('An error occurred: ' + E.Message);
-  end;
-end;
-
-procedure TMainF.FilterQueryByProfileID(ProfileID: Integer);
-begin
-  DataM.Query1.Filtered := False;
-  DataM.Query1.Filter := 'id = ' + IntToStr(ProfileID);
-  DataM.Query1.Filtered := True;
 end;
 
 //grid title click event for sorting

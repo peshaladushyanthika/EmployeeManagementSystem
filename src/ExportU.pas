@@ -42,44 +42,11 @@ implementation
 
 {$R *.dfm}
 uses
-  DataU,ReportEmpU;
+  DataU, EmpReportU;
 
   procedure TExportF.FormCreate(Sender: TObject);
 begin
   DBGrid.Options := DBGrid.Options + [dgRowSelect];
-end;
-
-//copy to clipboard
-procedure TExportF.btPrintClick(Sender: TObject);
-var
-  ProfileID: Integer;
-  Bookmark: TBookmark;
-  i: Integer;
-begin
-  try
-    for i := 0 to DBGrid.SelectedRows.Count - 1 do
-    begin
-      Bookmark := DBGrid.SelectedRows.Items[i];
-      DataM.Query1.GotoBookmark(Bookmark);
-      ProfileID := DataM.Query1.FieldByName('id').AsInteger;
-      FilterQueryByProfileID(ProfileID);
-      ShowMessage('Selected Profile ID:' + IntTostr(ProfileID));
-
-      ReportEmpF := TReportEmpF.Create(nil);
-      try
-        ReportEmpF.SetupEmpReport(ProfileID);
-        if i > 0 then
-         ReportEmpF.RLReport1.NewPage;
-      finally
-        ReportEmpF.Free;
-      end;
-    // Remove the filter after the report is generated for each profile
-      DataM.Query1.Filtered := False;
-    end;
-  except
-    on E: Exception do
-      ShowMessage('An error occurred: ' + E.Message);
-  end;
 end;
 
 procedure TExportF.FilterQueryByProfileID(ProfileID: Integer);
@@ -219,5 +186,51 @@ end;
 procedure TExportF.ExporttoExcel1Click(Sender: TObject);
 begin
 ExportToExcel(DBGrid);
+end;
+
+//print profiles
+procedure TExportF.btPrintClick(Sender: TObject);
+var
+  i: Integer;
+  SelectedIDs: TStringList;
+  FilterString: string;
+begin
+  SelectedIDs := TStringList.Create;
+  try
+    DBGrid.DataSource.DataSet.DisableControls;  // Collect selected IDs
+    try
+      for i := 0 to DBGrid.SelectedRows.Count - 1 do
+      begin
+        DBGrid.DataSource.DataSet.GotoBookmark(DBGrid.SelectedRows.Items[i]);
+        SelectedIDs.Add(DBGrid.DataSource.DataSet.FieldByName('id').AsString);
+      end;
+    finally
+      DBGrid.DataSource.DataSet.EnableControls;
+    end;
+
+    if SelectedIDs.Count > 0 then
+    begin
+
+      FilterString := 'id IN (' + SelectedIDs.CommaText + ')';   // Create a filter
+
+      EmpReportU.EmpReportF.Query1.Filter := FilterString;
+      EmpReportU.EmpReportF.Query1.Filtered := True;
+
+      EmpReportU.EmpReportF.Query2.Filtered := False;  // filter dataset for contacts
+      EmpReportU.EmpReportF.Query2.Filter := 'profileId IN (' + SelectedIDs.CommaText + ')';
+      EmpReportU.EmpReportF.Query2.Filtered := True;
+
+      EmpReportU.EmpReportF.ReportF.PreviewModal;
+
+      EmpReportU.EmpReportF.Query1.Filtered := False;
+      EmpReportU.EmpReportF.Query2.Filtered := False;
+    end
+    else
+    begin
+      ShowMessage('No profile selected');
+    end;
+  finally
+    SelectedIDs.Free;
+  end;
 end;
 end.

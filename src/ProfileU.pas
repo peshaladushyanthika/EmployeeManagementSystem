@@ -24,8 +24,6 @@ type
     addEd: TDBEdit;
     btClose: TButton;
     btSave: TButton;
-    Label7: TLabel;
-    ageEd: TDBEdit;
     DBGrid1: TDBGrid;
     btaddcon: TButton;
     btdelcon: TButton;
@@ -34,8 +32,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure btaddconClick(Sender: TObject);
     procedure btdelconClick(Sender: TObject);
-    procedure btPrintClick(Sender: TObject);
-    procedure FilterQueryByProfileID(ProfileID: Integer);
   private
     { Private declarations }
   public
@@ -46,7 +42,7 @@ var
   ProfileF: TProfileF;
 
 implementation
-uses DataU,ContactU,ReportEmpU;
+uses DataU,ContactU;
 
 {$R *.dfm}
 
@@ -148,27 +144,6 @@ begin
     ShowMessage('Transaction failed: ' + E.Message);
     end;
   end;
-end;
-
-procedure TProfileF.btPrintClick(Sender: TObject);
-var ProfileID: Integer;
-begin
-ProfileID := DataM.Query1.FieldByName('id').AsInteger;
-FilterQueryByProfileID(ProfileID);
-ReportEmpF := TReportEmpF.Create(nil);
-  try
-  finally
-    ReportEmpF.Free;
-    // Remove the filter after the report is generated
-    DataM.Query1.Filtered := False;
-  end;
-end;
-procedure TProfileF.FilterQueryByProfileID(ProfileID: Integer);
-begin
-  // Set the filter on the Query1 dataset to show only the details of the current profile
-  DataM.Query1.Filtered := False;
-  DataM.Query1.Filter := 'id = ' + IntToStr(ProfileID);
-  DataM.Query1.Filtered := True;
 end;
 
 //close the form

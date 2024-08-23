@@ -3,8 +3,8 @@ object ProfileF: TProfileF
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Profile'
-  ClientHeight = 639
-  ClientWidth = 694
+  ClientHeight = 625
+  ClientWidth = 688
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -105,20 +105,6 @@ object ProfileF: TProfileF
     Font.Style = []
     ParentFont = False
   end
-  object Label7: TLabel
-    Left = 405
-    Top = 117
-    Width = 29
-    Height = 19
-    Caption = 'Age'
-    FocusControl = ageEd
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -17
-    Font.Name = 'zz'
-    Font.Style = []
-    ParentFont = False
-  end
   object DBEdit1: TDBEdit
     AlignWithMargins = True
     Left = 201
@@ -152,7 +138,7 @@ object ProfileF: TProfileF
     AlignWithMargins = True
     Left = 201
     Top = 116
-    Width = 168
+    Width = 391
     Height = 31
     Margins.Left = 5
     Margins.Bottom = 5
@@ -226,15 +212,6 @@ object ProfileF: TProfileF
     TabOrder = 7
     OnClick = btSaveClick
   end
-  object ageEd: TDBEdit
-    Left = 466
-    Top = 111
-    Width = 127
-    Height = 31
-    DataField = 'age'
-    DataSource = DataSource1
-    TabOrder = 8
-  end
   object DBGrid1: TDBGrid
     AlignWithMargins = True
     Left = 97
@@ -242,7 +219,7 @@ object ProfileF: TProfileF
     Width = 497
     Height = 177
     DataSource = DataM.DataSource2
-    TabOrder = 9
+    TabOrder = 8
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -17
@@ -300,7 +277,7 @@ object ProfileF: TProfileF
     Width = 126
     Height = 42
     Caption = 'Delete'
-    TabOrder = 11
+    TabOrder = 9
     OnClick = btdelconClick
   end
   object DataSource1: TDataSource

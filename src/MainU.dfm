@@ -29,7 +29,7 @@ object MainF: TMainF
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1067
+    ExplicitWidth = 1058
     object btExit: TButton
       AlignWithMargins = True
       Left = 953
@@ -121,7 +121,7 @@ object MainF: TMainF
       Left = 17
       Top = 8
       Width = 281
-      Height = 51
+      Height = 31
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -17

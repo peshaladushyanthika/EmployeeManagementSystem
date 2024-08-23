@@ -19,14 +19,13 @@ type
     Query1name: TStringField;
     Query1dob: TDateField;
     Query1NIC: TStringField;
-    Query1contact: TStringField;
     Query1address: TStringField;
     DataSource2: TDataSource;
     Query2: TFDQuery;
     Query2id: TFDAutoIncField;
     Query2contact: TStringField;
-    Query1age: TIntegerField;
     Query2profileId: TIntegerField;
+    Query1contact: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure Query1CalcFields(DataSet: TDataSet);
   private
@@ -64,7 +63,7 @@ begin
   if BirthDate <> 0 then
   begin
     Age :=  YearOf(Now) - YearOf(BirthDate);
-    Query1age.AsInteger := Age;
+//    Query1age.AsInteger := Age;
 //    ageEd.Text := IntToStr(Age);
   end;
 end;
