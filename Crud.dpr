@@ -8,7 +8,6 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   ContactU in 'src\ContactU.pas' {ContactF},
-  ReportEmpU in 'src\ReportEmpU.pas' {ReportEmpF},
   ExportU in 'src\ExportU.pas' {ExportF},
   ReportU in 'src\ReportU.pas' {ReportF};
 
@@ -22,7 +21,6 @@ begin
   Application.CreateForm(TMainF, MainF);
   Application.CreateForm(TProfileF, ProfileF);
   Application.CreateForm(TContactF, ContactF);
-  Application.CreateForm(TReportEmpF, ReportEmpF);
   Application.CreateForm(TExportF, ExportF);
   Application.CreateForm(TReportF, ReportF);
   Application.Run;

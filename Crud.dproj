@@ -118,10 +118,6 @@
             <Form>ContactF</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\ReportEmpU.pas">
-            <Form>ReportEmpF</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="src\ExportU.pas">
             <Form>ExportF</Form>
             <FormType>dfm</FormType>
