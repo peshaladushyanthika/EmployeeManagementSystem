@@ -32,7 +32,7 @@ object MainF: TMainF
     ExplicitWidth = 1058
     object btExit: TButton
       AlignWithMargins = True
-      Left = 953
+      Left = 970
       Top = 8
       Width = 75
       Height = 41
@@ -49,7 +49,7 @@ object MainF: TMainF
     end
     object btAdd: TButton
       AlignWithMargins = True
-      Left = 626
+      Left = 562
       Top = 8
       Width = 75
       Height = 41
@@ -67,7 +67,7 @@ object MainF: TMainF
     end
     object btEdit: TButton
       AlignWithMargins = True
-      Left = 708
+      Left = 644
       Top = 8
       Width = 75
       Height = 41
@@ -84,7 +84,7 @@ object MainF: TMainF
     end
     object btDelete: TButton
       AlignWithMargins = True
-      Left = 790
+      Left = 726
       Top = 8
       Width = 75
       Height = 41
@@ -133,7 +133,7 @@ object MainF: TMainF
       OnChange = edSearchChange
     end
     object btExport: TButton
-      Left = 872
+      Left = 808
       Top = 8
       Width = 75
       Height = 41
@@ -146,6 +146,21 @@ object MainF: TMainF
       ParentFont = False
       TabOrder = 6
       OnClick = btExportClick
+    end
+    object Button1: TButton
+      Left = 889
+      Top = 8
+      Width = 75
+      Height = 41
+      Caption = 'Report'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
+      OnClick = Button1Click
     end
   end
   object DBGrid1: TDBGrid

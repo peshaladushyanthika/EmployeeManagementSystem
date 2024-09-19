@@ -18,14 +18,16 @@ type
     edSearch: TEdit;
     btExport: TButton;
     DBGrid1: TDBGrid;
+    Button1: TButton;
     procedure btAddClick(Sender: TObject);
     procedure btEditClick(Sender: TObject);
     procedure btDeleteClick(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure btExitClick(Sender: TObject);
     procedure DBGrid1TitleClick(Column: TColumn);
-   procedure edSearchChange(Sender: TObject);
+    procedure edSearchChange(Sender: TObject);
     procedure btExportClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +39,7 @@ var
 
 implementation
 //link data module to main form
-uses DataU,ProfileU,ExportU;
+uses DataU,ProfileU,ExportU,ReportEmpU,ReportU;
 
 {$R *.dfm}
 
@@ -153,6 +155,68 @@ with DataM.Query1 do
     // Reopen the dataset to apply the sorting
     Close;
     Open;
+  end;
+end;
+
+procedure TMainF.Button1Click(Sender: TObject);
+var
+  Bookmarks: array of TBookmark;
+  i: Integer;
+  ProfileIdValue: string;
+  DebugMessages: string;
+  MasterFilterString: string;
+  DetailFilterString: string;
+begin
+  SetLength(Bookmarks, DBGrid1.SelectedRows.Count);   // Set length of the bookmarks array to match the number of selected rows
+
+  DebugMessages := '';
+  MasterFilterString := '';
+  DetailFilterString := '';
+
+  for i := 0 to DBGrid1.SelectedRows.Count - 1 do
+  begin
+    ReportF.FDQuery1.GotoBookmark(DBGrid1.SelectedRows.Items[i]);
+    Bookmarks[i] := ReportF.FDQuery1.GetBookmark;
+
+    ProfileIdValue := ReportF.FDQuery1.FieldByName('Id').AsString;
+
+    // Collect debug message for each bookmark
+    DebugMessages := DebugMessages + 'Bookmark ' + IntToStr(i) + ' set for ProfileId: ' + ProfileIdValue + sLineBreak;
+
+    // Build the filter string for selected profile IDs in the master table
+    if i > 0 then
+      MasterFilterString := MasterFilterString + ' OR ';
+      MasterFilterString :=  MasterFilterString + 'Id = ' + QuotedStr(ProfileIdValue);
+
+    // Build the filter string for selected profile IDs in the detail table
+    if i > 0 then
+      DetailFilterString := DetailFilterString + ' OR ';
+      DetailFilterString := DetailFilterString + 'profileId = ' + QuotedStr(ProfileIdValue);
+  end;
+
+  ReportF := TReportF.Create(nil);    // Create the report instance
+  try
+    // Apply the filter to the master dataset based on the collected profile IDs
+    ReportF.FDQuery1.Filter := MasterFilterString;
+    ReportF.FDQuery1.Filtered := True;
+
+    // Apply the filter to the detail dataset
+    ReportF.FDQuery2.Filter := DetailFilterString;
+    ReportF.FDQuery2.Filtered := True;
+
+    // Refresh datasets to ensure the filter is applied
+    ReportF.FDQuery1.First;
+    ReportF.FDQuery2.First;
+
+    // Prepare the data for the report
+    ReportF.RLReport1.Prepare;
+
+    // Show all debug messages at once
+    ShowMessage(DebugMessages);
+    // Preview the report once with all selected profiles
+    ReportF.RLReport1.Preview;
+  finally
+    ReportF.Free;
   end;
 end;
 end.
