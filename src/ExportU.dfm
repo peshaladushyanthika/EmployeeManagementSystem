@@ -3,8 +3,8 @@ object ExportF: TExportF
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Export Profile'
-  ClientHeight = 486
-  ClientWidth = 956
+  ClientHeight = 500
+  ClientWidth = 962
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,25 +16,11 @@ object ExportF: TExportF
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 956
+    Width = 962
     Height = 57
     Align = alTop
     TabOrder = 0
-    object btPrint: TButton
-      Left = 704
-      Top = 7
-      Width = 105
-      Height = 41
-      Caption = 'Print'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -17
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 0
-      OnClick = btPrintClick
-    end
+    ExplicitWidth = 956
     object Button1: TButton
       Left = 832
       Top = 7
@@ -47,15 +33,15 @@ object ExportF: TExportF
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 0
       OnClick = Button1Click
     end
   end
   object DBGrid: TDBGrid
     Left = 0
     Top = 57
-    Width = 956
-    Height = 429
+    Width = 962
+    Height = 443
     Align = alClient
     DataSource = DataM.DataSource1
     Font.Charset = DEFAULT_CHARSET

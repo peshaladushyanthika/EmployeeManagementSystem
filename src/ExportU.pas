@@ -11,7 +11,6 @@ type
   TExportF = class(TForm)
     Panel1: TPanel;
     DBGrid: TDBGrid;
-    btPrint: TButton;
     PopupMenu1: TPopupMenu;
     copytoclipboard1: TMenuItem;
     ExporttoXML1: TMenuItem;
@@ -24,8 +23,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ExportToXMLClick;
     procedure ExporttoXML1Click(Sender: TObject);
-    procedure btPrintClick(Sender: TObject);
-    procedure FilterQueryByProfileID(ProfileID: Integer);
     procedure Button1Click(Sender: TObject);
     procedure ExporttoExcel1Click(Sender: TObject);
     procedure ExportToExcel(DBGrid: TDBGrid);
@@ -42,18 +39,11 @@ implementation
 
 {$R *.dfm}
 uses
-  DataU, EmpReportU;
+  DataU,ReportEmpU;
 
   procedure TExportF.FormCreate(Sender: TObject);
 begin
   DBGrid.Options := DBGrid.Options + [dgRowSelect];
-end;
-
-procedure TExportF.FilterQueryByProfileID(ProfileID: Integer);
-begin
-  DataM.Query1.Filtered := False;
-  DataM.Query1.Filter := 'id = ' + IntToStr(ProfileID);
-  DataM.Query1.Filtered := True;
 end;
 
 procedure TExportF.Button1Click(Sender: TObject);
@@ -67,7 +57,7 @@ var
   Line: string;
 begin
     // Add data rows
-    while not DBGrid.DataSource.DataSet.Eof do
+    while not DBGrid.DataSource.DataSet.Eof do  //current record is not the last
     begin
       Line := '';
       for i := 0 to DBGrid.Columns.Count - 1 do
@@ -76,10 +66,15 @@ begin
       end;
       Line := Line + sLineBreak;
       try
-      Clipboard.AsText := Line;
-      except
-    on E: Exception do
-      ShowMessage('Error accessing clipboard: ' + E.Message);
+      Clipboard.Open;
+      try
+        Clipboard.AsText := Line;
+      finally
+        Clipboard.Close;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Error accessing clipboard: ' + E.Message);
     end;
     end;
 end;
@@ -101,7 +96,11 @@ begin
     // Add headers
     Line := '';
     for i := 0 to DBGrid.Columns.Count - 1 do
-      Line := Line + DBGrid.Columns[i].Title.Caption + ',';
+    begin
+      Line := Line + DBGrid.Columns[i].Title.Caption;
+      if i < DBGrid.Columns.Count - 1 then
+        Line := Line + ','; // Add a comma only if it's not the last column
+    end;
     Strings.Add(Line);
 
     // Add data rows
@@ -110,12 +109,18 @@ begin
     begin
       Line := '';
       for i := 0 to DBGrid.Columns.Count - 1 do
-        Line := Line + DBGrid.Fields[i].AsString + ',';
+      begin
+        Line := Line + DBGrid.Fields[i].AsString;
+        if i < DBGrid.Columns.Count - 1 then
+          Line := Line + ','; // Add a comma only if it's not the last field
+      end;
       Strings.Add(Line);
       DBGrid.DataSource.DataSet.Next;
     end;
-  Strings.SaveToFile('GridData.csv');
-  showmessage('Export into CSV');
+
+    // Save to file
+    Strings.SaveToFile('GridData.csv');
+    ShowMessage('Exported to CSV successfully');
   finally
     Strings.Free;
   end;
@@ -186,49 +191,5 @@ end;
 procedure TExportF.ExporttoExcel1Click(Sender: TObject);
 begin
 ExportToExcel(DBGrid);
-end;
-
-//print profiles
-procedure TExportF.btPrintClick(Sender: TObject);
-var
-  i: Integer;
-  SelectedIDs: TStringList;
-  FilterString: string;
-begin
-  SelectedIDs := TStringList.Create;
-  try
-    DBGrid.DataSource.DataSet.DisableControls;  // Collect selected IDs
-    try
-      for i := 0 to DBGrid.SelectedRows.Count - 1 do
-      begin
-        DBGrid.DataSource.DataSet.GotoBookmark(DBGrid.SelectedRows.Items[i]);
-        SelectedIDs.Add(DBGrid.DataSource.DataSet.FieldByName('id').AsString);
-      end;
-    finally
-      DBGrid.DataSource.DataSet.EnableControls;
-    end;
-    if SelectedIDs.Count > 0 then
-    begin
-      FilterString := 'id IN (' + SelectedIDs.CommaText + ')';   // Create a filter
-
-      EmpReportU.EmpReportF.Query1.Filter := FilterString;
-      EmpReportU.EmpReportF.Query1.Filtered := True;
-
-      EmpReportU.EmpReportF.Query2.Filtered := False;  // filter dataset for contacts
-      EmpReportU.EmpReportF.Query2.Filter := 'profileId IN (' + SelectedIDs.CommaText + ')';
-      EmpReportU.EmpReportF.Query2.Filtered := True;
-
-      EmpReportU.EmpReportF.ReportF.PreviewModal;
-
-      EmpReportU.EmpReportF.Query1.Filtered := False;
-      EmpReportU.EmpReportF.Query2.Filtered := False;
-    end
-    else
-    begin
-      ShowMessage('No profile selected');
-    end;
-  finally
-    SelectedIDs.Free;
-  end;
 end;
 end.
