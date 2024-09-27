@@ -39,7 +39,7 @@ var
 
 implementation
 //link data module to main form
-uses DataU,ProfileU,ExportU,ReportEmpU,ReportU;
+uses DataU,ProfileU,ExportU,ReportU;
 
 {$R *.dfm}
 
@@ -62,8 +62,7 @@ if response = mrYes then
   try
   //start transaction
   DataM.Connection1.StartTransaction;
-  // Get the ProfileID
-  ProfileID := DataM.Query1.FieldByName('id').AsInteger;
+  ProfileID := DataM.Query1.FieldByName('id').AsInteger;  // Get the ProfileID
   // Check if there are any related contacts in the contact table
   DataM.Query2.Close;
   DataM.Query2.SQL.Text := 'SELECT * FROM contact WHERE profileId = :ProfileID';
@@ -114,8 +113,10 @@ exit;
 //search by name and contact
 with DataM.Query1 do
 begin
-  if Locate('name;contact', VarArrayOf(['edSearch.Text', 'edSearch.Text']), [loCaseInsensitive,loPartialKey]) then
-    ShowMessage('Found the profile')
+  if Locate('name', edSearch.Text, [loCaseInsensitive,loPartialKey]) then
+  exit;
+   if Locate('NIC', edSearch.Text, [loCaseInsensitive,loPartialKey]) then
+   exit
   else
     ShowMessage('Profile not found');
 end;
@@ -160,63 +161,45 @@ end;
 
 procedure TMainF.Button1Click(Sender: TObject);
 var
-  Bookmarks: array of TBookmark;
   i: Integer;
-  ProfileIdValue: string;
-  DebugMessages: string;
+  SelectedIDs: TStringList;
   MasterFilterString: string;
   DetailFilterString: string;
 begin
-  SetLength(Bookmarks, DBGrid1.SelectedRows.Count);   // Set length of the bookmarks array to match the number of selected rows
-
-  DebugMessages := '';
-  MasterFilterString := '';
-  DetailFilterString := '';
-
-  for i := 0 to DBGrid1.SelectedRows.Count - 1 do
-  begin
-    ReportF.FDQuery1.GotoBookmark(DBGrid1.SelectedRows.Items[i]);
-    Bookmarks[i] := ReportF.FDQuery1.GetBookmark;
-
-    ProfileIdValue := ReportF.FDQuery1.FieldByName('Id').AsString;
-
-    // Collect debug message for each bookmark
-    DebugMessages := DebugMessages + 'Bookmark ' + IntToStr(i) + ' set for ProfileId: ' + ProfileIdValue + sLineBreak;
-
-    // Build the filter string for selected profile IDs in the master table
-    if i > 0 then
-      MasterFilterString := MasterFilterString + ' OR ';
-      MasterFilterString :=  MasterFilterString + 'Id = ' + QuotedStr(ProfileIdValue);
-
-    // Build the filter string for selected profile IDs in the detail table
-    if i > 0 then
-      DetailFilterString := DetailFilterString + ' OR ';
-      DetailFilterString := DetailFilterString + 'profileId = ' + QuotedStr(ProfileIdValue);
-  end;
-
-  ReportF := TReportF.Create(nil);    // Create the report instance
+  SelectedIDs := TStringList.Create;
   try
-    // Apply the filter to the master dataset based on the collected profile IDs
-    ReportF.FDQuery1.Filter := MasterFilterString;
-    ReportF.FDQuery1.Filtered := True;
+    DBGrid1.DataSource.DataSet.DisableControls;
+    try
+      for i := 0 to DBGrid1.SelectedRows.Count - 1 do
+      begin
+        DBGrid1.DataSource.DataSet.GotoBookmark(DBGrid1.SelectedRows.Items[i]);
+        SelectedIDs.Add(DBGrid1.DataSource.DataSet.FieldByName('id').AsString);
+      end;
+    finally
+      DBGrid1.DataSource.DataSet.EnableControls;
+    end;
 
-    // Apply the filter to the detail dataset
-    ReportF.FDQuery2.Filter := DetailFilterString;
-    ReportF.FDQuery2.Filtered := True;
+    if SelectedIDs.Count > 0 then
+    begin
+      MasterFilterString := 'id IN (' + SelectedIDs.CommaText + ')'; // Create a filter string for master table
+      ReportU.ReportF.FDQuery1.Filter := MasterFilterString;
+      ReportU.ReportF.FDQuery1.Filtered := True;
 
-    // Refresh datasets to ensure the filter is applied
-    ReportF.FDQuery1.First;
-    ReportF.FDQuery2.First;
+      ReportU.ReportF.FDQuery2.Filtered := False;
+      DetailFilterString :=  'profileId IN (' + SelectedIDs.CommaText + ')'; //create filter string for detail table
+      ReportU.ReportF.FDQuery2.Filter :=  DetailFilterString;
+      ReportU.ReportF.FDQuery2.Filtered := True;
 
-    // Prepare the data for the report
-    ReportF.RLReport1.Prepare;
-
-    // Show all debug messages at once
-    ShowMessage(DebugMessages);
-    // Preview the report once with all selected profiles
-    ReportF.RLReport1.Preview;
+      ReportU.ReportF.RLReport1.PreviewModal;
+      ReportU.ReportF.FDQuery1.Filtered := False;
+      ReportU.ReportF.FDQuery2.Filtered := False;
+    end
+    else
+    begin
+      ShowMessage('No rows selected for printing.');
+    end;
   finally
-    ReportF.Free;
+    SelectedIDs.Free;
   end;
 end;
 end.

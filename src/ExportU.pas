@@ -39,7 +39,7 @@ implementation
 
 {$R *.dfm}
 uses
-  DataU,ReportEmpU;
+  DataU;
 
   procedure TExportF.FormCreate(Sender: TObject);
 begin
@@ -65,17 +65,12 @@ begin
         Line := Line + DBGrid.Fields[i].AsString + #9; //Tab seperated
       end;
       Line := Line + sLineBreak;
-      try
       Clipboard.Open;
       try
         Clipboard.AsText := Line;
       finally
         Clipboard.Close;
       end;
-    except
-      on E: Exception do
-        ShowMessage('Error accessing clipboard: ' + E.Message);
-    end;
     end;
 end;
 

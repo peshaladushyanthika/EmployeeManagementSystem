@@ -18,10 +18,10 @@ object ProfileF: TProfileF
     AlignWithMargins = True
     Left = 96
     Top = 34
-    Width = 17
+    Width = 70
     Height = 23
     Margins.Top = 10
-    Caption = 'ID'
+    Caption = 'Profile ID'
     FocusControl = DBEdit1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -78,11 +78,10 @@ object ProfileF: TProfileF
   object Label5: TLabel
     AlignWithMargins = True
     Left = 96
-    Top = 197
+    Top = 255
     Width = 60
     Height = 23
     Caption = 'Contact'
-    FocusControl = conEd
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -17
@@ -93,7 +92,7 @@ object ProfileF: TProfileF
   object Label6: TLabel
     AlignWithMargins = True
     Left = 96
-    Top = 236
+    Top = 205
     Width = 60
     Height = 23
     Caption = 'Address'
@@ -158,49 +157,22 @@ object ProfileF: TProfileF
     DataSource = DataSource1
     TabOrder = 3
   end
-  object conEd: TDBEdit
-    AlignWithMargins = True
-    Left = 200
-    Top = 194
-    Width = 392
-    Height = 31
-    Margins.Left = 5
-    Margins.Bottom = 5
-    DataField = 'contact'
-    DataSource = DataSource1
-    TabOrder = 4
-  end
   object addEd: TDBEdit
     AlignWithMargins = True
     Left = 200
-    Top = 233
+    Top = 197
     Width = 392
     Height = 31
     Margins.Left = 5
     Margins.Bottom = 5
     DataField = 'address'
     DataSource = DataSource1
-    TabOrder = 5
-  end
-  object btClose: TButton
-    Left = 405
-    Top = 272
-    Width = 187
-    Height = 41
-    Caption = 'Close'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -17
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 6
-    OnClick = btCloseClick
+    TabOrder = 4
   end
   object btSave: TButton
-    Left = 201
-    Top = 272
-    Width = 184
+    Left = 437
+    Top = 455
+    Width = 70
     Height = 41
     Caption = 'Save'
     Font.Charset = DEFAULT_CHARSET
@@ -209,45 +181,24 @@ object ProfileF: TProfileF
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 5
     OnClick = btSaveClick
   end
   object DBGrid1: TDBGrid
     AlignWithMargins = True
-    Left = 97
-    Top = 352
-    Width = 497
-    Height = 177
+    Left = 200
+    Top = 255
+    Width = 391
+    Height = 186
     DataSource = DataM.DataSource2
-    TabOrder = 8
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    TabOrder = 6
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -17
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     Columns = <
-      item
-        Expanded = False
-        FieldName = 'id'
-        Title.Caption = 'ID'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -17
-        Title.Font.Name = 'Segoe UI'
-        Title.Font.Style = [fsBold]
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'profileId'
-        Title.Caption = 'ProfileId'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -17
-        Title.Font.Name = 'Segoe UI'
-        Title.Font.Style = [fsBold]
-        Visible = True
-      end
       item
         Expanded = False
         FieldName = 'contact'
@@ -262,23 +213,47 @@ object ProfileF: TProfileF
   end
   object btaddcon: TButton
     AlignWithMargins = True
-    Left = 328
-    Top = 543
-    Width = 120
+    Left = 201
+    Top = 455
+    Width = 64
     Height = 42
     Caption = 'Add'
-    TabOrder = 10
+    TabOrder = 8
     OnClick = btaddconClick
   end
   object btdelcon: TButton
     AlignWithMargins = True
-    Left = 466
-    Top = 543
-    Width = 126
+    Left = 359
+    Top = 455
+    Width = 66
     Height = 42
     Caption = 'Delete'
-    TabOrder = 9
+    TabOrder = 7
     OnClick = btdelconClick
+  end
+  object bteditcon: TButton
+    Left = 280
+    Top = 455
+    Width = 65
+    Height = 42
+    Caption = 'Edit'
+    TabOrder = 9
+    OnClick = bteditconClick
+  end
+  object btClose: TButton
+    Left = 520
+    Top = 455
+    Width = 71
+    Height = 41
+    Caption = 'Close'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+    OnClick = btCloseClick
   end
   object DataSource1: TDataSource
     DataSet = DataM.Query1

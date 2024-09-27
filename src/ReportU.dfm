@@ -3,7 +3,7 @@ object ReportF: TReportF
   Top = 0
   Caption = 'Report'
   ClientHeight = 704
-  ClientWidth = 987
+  ClientWidth = 886
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

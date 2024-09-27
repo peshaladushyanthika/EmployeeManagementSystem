@@ -3,8 +3,8 @@ object ExportF: TExportF
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Export Profile'
-  ClientHeight = 500
-  ClientWidth = 962
+  ClientHeight = 486
+  ClientWidth = 956
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,11 +16,11 @@ object ExportF: TExportF
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 962
+    Width = 956
     Height = 57
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 956
+    ExplicitWidth = 950
     object Button1: TButton
       Left = 832
       Top = 7
@@ -40,8 +40,8 @@ object ExportF: TExportF
   object DBGrid: TDBGrid
     Left = 0
     Top = 57
-    Width = 962
-    Height = 443
+    Width = 956
+    Height = 429
     Align = alClient
     DataSource = DataM.DataSource1
     Font.Charset = DEFAULT_CHARSET

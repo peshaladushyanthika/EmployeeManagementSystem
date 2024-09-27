@@ -8,7 +8,7 @@ object DataM: TDataM
       'Database=user'
       'User_Name=root'
       'Server=localhost'
-      'Password=jami1998'
+      'Password=test'
       'DriverID=MySQL')
     Connected = True
     LoginPrompt = False
